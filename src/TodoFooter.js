@@ -44,7 +44,7 @@ export default class TodoFooter extends React.Component {
     }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
     View: {
         height: 80,
         width: '100%',

@@ -48,7 +48,7 @@ export default class TodoItem extends React.Component {
     }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
     View: {
         height: 50,
         width: '100%',

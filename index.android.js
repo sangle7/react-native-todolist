@@ -23,9 +23,9 @@ class AwesomeProject extends Component {
 		};
 	}
 	componentWillMount() {
-		var keyName = 'todolists';
-		AsyncStorage.getItem(keyName, (errs, result) => {
-			if (!errs) {
+		//读取储存的待办事项
+		AsyncStorage.getItem('todolists', (errs, result) => {
+			if (result) {
 				let _arr = result.split('^')
 				let _temp = _arr.map((elem) => {
 					return {
@@ -95,12 +95,11 @@ class AwesomeProject extends Component {
 	}
 
 	componentDidUpdate(nextProp) {
-		var keyName = 'todolists';
-		var todoName = this.state.todos.map((elem) => {
+		let todoName = this.state.todos.map((elem) => {
 			return elem.isDone + '/' + elem.text
 		})
 		let todoString = todoName.join('^')
-		AsyncStorage.setItem(keyName, todoString, (errs) => {
+		AsyncStorage.setItem('todolists', todoString, (errs) => {
 			if (errs) {
 				console.log('存储错误');
 			}
@@ -112,9 +111,7 @@ class AwesomeProject extends Component {
 	}
 
 	render() {
-		console.log(this.state.todos)
-
-		var props = {
+		let props = {
 			todoCount: this.state.todos.length || 0,
 			todoDoneCount: (this.state.todos && this.state.todos.filter((todo) => todo.isDone)).length || 0
 		};
@@ -128,7 +125,7 @@ class AwesomeProject extends Component {
 	}
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'column',
