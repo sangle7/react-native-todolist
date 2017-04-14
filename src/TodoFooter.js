@@ -35,6 +35,7 @@ export default class TodoFooter extends React.Component {
             label=''
             checked={this.props.isAllChecked}
             onChange={this.handlerAllState.bind(this)}
+            underlayColor='transparent'
             />
                 <Text style={styles.Text} >{this.props.todoDoneCount}已完成 / {this.props.todoCount}总数</Text>
                 <Button style={styles.Button} onPress={this.handlerClick.bind(this)} title="清除已完成" />

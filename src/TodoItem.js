@@ -29,13 +29,16 @@ export default class TodoItem extends React.Component {
             textDecorationLine: 'none'
         };
 
+
+        let bool = /true/.test(this.props.isDone) ? true : false
+
         return (
             <View style={styles.View}>
             <CheckBox 
             uncheckedImage={require('./checkboxu.png')} 
             checkedImage={require('./checkbox.png')}
             label=''
-            checked={this.props.isDone}
+            checked={bool}
             onChange={this.handlerChange.bind(this)}
             />
                 <Text style={styles.Text} >{this.props.text}</Text>

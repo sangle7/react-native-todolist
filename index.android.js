@@ -8,6 +8,7 @@ import {
 	StyleSheet,
 	Text,
 	View,
+	AsyncStorage
 } from 'react-native';
 import TodoHeader from "./src/TodoHeader.js";
 import TodoMain from "./src/TodoMain.js";
@@ -20,6 +21,26 @@ class AwesomeProject extends Component {
 			todos: [],
 			isAllChecked: false
 		};
+	}
+	componentWillMount() {
+		var keyName = 'todolists';
+		AsyncStorage.getItem(keyName, (errs, result) => {
+			if (!errs) {
+				let _arr = result.split('^')
+				let _temp = _arr.map((elem) => {
+					return {
+						isDone: elem.split('/')[0],
+						text: elem.split('/')[1]
+					}
+				})
+				this.setState({
+					todos: _temp
+				})
+			}
+		});
+	}
+	componentDidMount() {
+		this.allChecked();
 	}
 
 	// 判断是否所有任务的状态都完成，同步底部的全选框
@@ -73,7 +94,26 @@ class AwesomeProject extends Component {
 		});
 	}
 
+	componentDidUpdate(nextProp) {
+		var keyName = 'todolists';
+		var todoName = this.state.todos.map((elem) => {
+			return elem.isDone + '/' + elem.text
+		})
+		let todoString = todoName.join('^')
+		AsyncStorage.setItem(keyName, todoString, (errs) => {
+			if (errs) {
+				console.log('存储错误');
+			}
+			if (!errs) {
+				console.log(todoString);
+			}
+		});
+
+	}
+
 	render() {
+		console.log(this.state.todos)
+
 		var props = {
 			todoCount: this.state.todos.length || 0,
 			todoDoneCount: (this.state.todos && this.state.todos.filter((todo) => todo.isDone)).length || 0
