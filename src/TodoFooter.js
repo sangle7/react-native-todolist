@@ -26,6 +26,7 @@ export default class TodoFooter extends React.Component {
     }
 
     render() {
+        let bool = /true/.test(this.props.isAllChecked) ? true : false
         return (
             <View style={styles.View}>
             <CheckBox
@@ -51,11 +52,12 @@ let styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'pink'
+        backgroundColor: '#E91E63',
     },
     Text: {
         width: '60%',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        color: 'white'
     },
     Button: {
         width: '20%',

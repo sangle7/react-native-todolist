@@ -23,27 +23,28 @@ class AwesomeProject extends Component {
 		};
 	}
 	componentWillMount() {
-		//读取储存的待办事项
-		AsyncStorage.getItem('todolists', (errs, result) => {
-			if (result) {
-				let _arr = result.split('^')
-				let _temp = _arr.map((elem) => {
-					return {
-						isDone: elem.split('/')[0],
-						text: elem.split('/')[1]
+			//读取储存的待办事项
+			AsyncStorage.getItem('todolists', (errs, result) => {
+				if (result) {
+					let _arr = result.split('^')
+					let _temp = _arr.map((elem) => {
+						return {
+							isDone: /true/.test(elem.split('/')[0]) ? true : false,
+							text: elem.split('/')[1]
+						}
+					})
+					let isAllChecked = false;
+					if (_temp.every((elem) => elem.isDone)) {
+						isAllChecked = true;
 					}
-				})
-				this.setState({
-					todos: _temp
-				})
-			}
-		});
-	}
-	componentDidMount() {
-		this.allChecked();
-	}
-
-	// 判断是否所有任务的状态都完成，同步底部的全选框
+					this.setState({
+						todos: _temp,
+						isAllChecked
+					})
+				}
+			});
+		}
+		// 判断是否所有任务的状态都完成，同步底部的全选框
 	allChecked() {
 		let isAllChecked = false;
 		if (this.state.todos.every((todo) => todo.isDone)) {
@@ -51,7 +52,7 @@ class AwesomeProject extends Component {
 		}
 		this.setState({
 			todos: this.state.todos,
-			isAllChecked
+			isAllChecked: isAllChecked
 		});
 	}
 
@@ -99,14 +100,7 @@ class AwesomeProject extends Component {
 			return elem.isDone + '/' + elem.text
 		})
 		let todoString = todoName.join('^')
-		AsyncStorage.setItem('todolists', todoString, (errs) => {
-			if (errs) {
-				console.log('存储错误');
-			}
-			if (!errs) {
-				console.log(todoString);
-			}
-		});
+		AsyncStorage.setItem('todolists', todoString);
 
 	}
 

@@ -30,7 +30,7 @@ export default class TodoHeader extends React.Component {
     render() {
         return (
             <View style={styles.View}>
-        <TextInput style={styles.TextInput} underlineColorAndroid="#2196f3" selectionColor="#2196f3" placeholder="what's your task ?" onSubmitEditing={this.handleSubmit.bind(this)}  onChangeText={(text) => this.setState({text})} value={this.state.text} />
+        <TextInput style={styles.TextInput} placeholderTextColor='#9E9E9E' underlineColorAndroid="#2196f3" selectionColor="#2196f3" placeholder="What's Your Task?" onSubmitEditing={this.handleSubmit.bind(this)}  onChangeText={(text) => this.setState({text})} value={this.state.text} />
         <Button style={styles.Button} onPress={this.handleSubmit.bind(this)} title="Add"/>
             </View>
         )
@@ -41,13 +41,14 @@ let styles = StyleSheet.create({
     View: {
         height: 50,
         width: '100%',
-        backgroundColor: 'pink',
+        backgroundColor: '#E91E63',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
     TextInput: {
-        width: '80%'
+        width: '80%',
+        color: 'white'
     },
     Button: {
         width: '20%',

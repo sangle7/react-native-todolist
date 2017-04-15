@@ -3,21 +3,25 @@ import TodoItem from './TodoItem.js';
 import {
     StyleSheet,
     ListView,
-    View
+    View,
+    Text
 } from 'react-native';
-
+// <TodoItem key={index} {...todo} index={index} {...this.props}/>
 
 class TodoMain extends React.Component {
-    // 遍历显示任务，转发props
     render() {
+        let ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+        let dataSource = ds.cloneWithRows(this.props.todos)
         return (
-            <View style={styles.container}>
-             {this.props.todos.map((todo, index) => {
-                    return <TodoItem key={index} {...todo} index={index} {...this.props}/>
-                })}
-             </View>
-        )
-    }
+            <ListView style = {styles.container}
+            dataSource = {dataSource}
+            renderRow = {(rowData, sectionID, rowID) =><TodoItem key={rowID} {...rowData} index={rowID} {...this.props}/>
+        }
+        />
+    )
+}
 }
 let styles = StyleSheet.create({
     container: {

@@ -13,7 +13,8 @@ export default class TodoItem extends React.Component {
 
     // 处理任务是否完成状态
     handlerChange() {
-        let isDone = !this.props.isDone;
+        let bool = /true/.test(this.props.isDone) ? true : false
+        let isDone = !bool;
         this.props.changeTodoState(this.props.index, isDone);
     }
 
@@ -23,14 +24,8 @@ export default class TodoItem extends React.Component {
     }
 
     render() {
-        let doneStyle = this.props.isDone ? {
-            textDecorationLine: 'line-through'
-        } : {
-            textDecorationLine: 'none'
-        };
-
-
         let bool = /true/.test(this.props.isDone) ? true : false
+        let styleForText = bool ? styles.TextLine : styles.Text
 
         return (
             <View style={styles.View}>
@@ -41,7 +36,7 @@ export default class TodoItem extends React.Component {
             checked={bool}
             onChange={this.handlerChange.bind(this)}
             />
-                <Text style={styles.Text} >{this.props.text}</Text>
+                <Text style={styleForText} >{this.props.text}</Text>
                 <Button onPress={this.handlerDelete.bind(this)}  title="删除" />
             </View>
         )
@@ -55,12 +50,18 @@ let styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomColor: '#2196f3',
+        borderBottomColor: '#e0e0e0',
         borderBottomWidth: 1
     },
     Text: {
         width: '60%',
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        textDecorationLine: 'none',
+    },
+    TextLine: {
+        width: '60%',
+        textAlignVertical: 'center',
+        textDecorationLine: 'line-through',
     },
     Button: {
         width: '20%',
