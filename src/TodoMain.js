@@ -6,7 +6,6 @@ import {
     View,
     Text
 } from 'react-native';
-// <TodoItem key={index} {...todo} index={index} {...this.props}/>
 
 class TodoMain extends React.Component {
     render() {
