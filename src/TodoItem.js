@@ -6,8 +6,10 @@ import {
     StyleSheet,
     View
 } from 'react-native';
-import CheckBox from 'react-native-checkbox';
-
+import {
+    MKCheckbox,
+    MKButton
+} from 'react-native-material-kit';
 
 export default class TodoItem extends React.Component {
 
@@ -29,19 +31,20 @@ export default class TodoItem extends React.Component {
 
         return (
             <View style={styles.View}>
-            <CheckBox 
-            uncheckedImage={require('./checkboxu.png')} 
-            checkedImage={require('./checkbox.png')}
-            label=''
-            checked={bool}
-            onChange={this.handlerChange.bind(this)}
-            />
+        <MKCheckbox
+  checked={bool}
+  onCheckedChange={this.handlerChange.bind(this)}
+/>
                 <Text style={styleForText} >{this.props.text}</Text>
-                <Button onPress={this.handlerDelete.bind(this)}  title="删除" />
+                <ColoredFlatButton onPress={this.handlerDelete.bind(this)}/>
             </View>
         )
     }
 }
+const ColoredFlatButton = MKButton.coloredFlatButton()
+    .withText('删除')
+    .build();
+
 
 let styles = StyleSheet.create({
     View: {
@@ -62,12 +65,5 @@ let styles = StyleSheet.create({
         width: '60%',
         textAlignVertical: 'center',
         textDecorationLine: 'line-through',
-    },
-    Button: {
-        width: '20%',
-        right: 0,
-        fontSize: 15,
-        textAlignVertical: 'center'
-    },
-
+    }
 });

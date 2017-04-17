@@ -6,7 +6,10 @@ import {
     View,
     StyleSheet
 } from 'react-native';
-import CheckBox from 'react-native-checkbox';
+import {
+    MKCheckbox,
+    MKButton
+} from 'react-native-material-kit';
 export default class TodoFooter extends React.Component {
 
     // 处理全选与全不选的状态
@@ -29,21 +32,19 @@ export default class TodoFooter extends React.Component {
         let bool = /true/.test(this.props.isAllChecked) ? true : false
         return (
             <View style={styles.View}>
-            <CheckBox
-            ref='checkbox'
-            uncheckedImage={require('./checkboxu.png')} 
-            checkedImage={require('./checkbox.png')}
-            label=''
-            checked={this.props.isAllChecked}
-            onChange={this.handlerAllState.bind(this)}
-            underlayColor='transparent'
-            />
+            <MKCheckbox ref='checkbox'
+  checked={this.props.isAllChecked}
+  onCheckedChange={this.handlerAllState.bind(this)}
+/>
                 <Text style={styles.Text} >{this.props.todoDoneCount}已完成 / {this.props.todoCount}总数</Text>
-                <Button style={styles.Button} onPress={this.handlerClick.bind(this)} title="清除已完成" />
+                <ColoredRaisedButton onPress={this.handlerClick.bind(this)}/>
             </View>
         )
     }
 }
+const ColoredRaisedButton = MKButton.coloredButton()
+    .withText('清除已完成')
+    .build();
 
 let styles = StyleSheet.create({
     View: {

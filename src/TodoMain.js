@@ -6,13 +6,30 @@ import {
     View,
     Text
 } from 'react-native';
+import {
+    observer
+} from 'mobx-react';
+import {
+    AppState
+} from './appState.js';
 
-class TodoMain extends React.Component {
+
+export default @observer class TodoMain extends React.Component {
+
     render() {
         let ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-        let dataSource = ds.cloneWithRows(this.props.todos)
+        console.log(this.props.todos)
+        let _temp
+        if (AppState.category != 'All')
+            _temp = this.props.todos.filter((elem) => {
+                return elem.category == AppState.category
+            })
+        else {
+            _temp = this.props.todos
+        }
+        let dataSource = ds.cloneWithRows(_temp)
         return (
             <ListView style = {styles.container}
             dataSource = {dataSource}
@@ -29,4 +46,3 @@ let styles = StyleSheet.create({
         flexDirection: 'column',
     }
 });
-export default TodoMain;
